@@ -8,7 +8,7 @@ channel = "stable-24_05"
 [deployment]
 run = "python garage_scraper.py"
 deploymentTarget = "cloudrun"
-build = ["python3", "-m", "pip", "install", "-r", "requirements.txt"]
+build = ["pip", "install", "-r", "requirements.txt"]
 
 [[ports]]
 localPort = 5001
