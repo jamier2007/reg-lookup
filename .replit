@@ -1,6 +1,13 @@
+
+run = "python garage_scraper.py"
 modules = ["python-3.11"]
+
 [nix]
 channel = "stable-24_05"
+
+[deployment]
+run = "python garage_scraper.py"
+deploymentTarget = "cloudrun"
 
 [[ports]]
 localPort = 5001
