@@ -5,4 +5,4 @@ def get_vehicle_data(r):
  except:return None
 @app.route('/test/<r>')
 def test_vehicle_lookup(r):return jsonify(get_vehicle_data(r)or{"error":"No data found"})
-if __name__=="__main__":app.run(debug=True,host='127.0.0.1',port=5001)
+if __name__=="__main__":app.run(debug=True,host='0.0.0.0',port=5001)
