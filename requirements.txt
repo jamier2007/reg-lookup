@@ -4,3 +4,4 @@ beautifulsoup4==4.13.3
 gunicorn==21.2.0
 soupsieve==2.6
 typing-extensions==4.13.1
+python-dotenv==1.0.1
