@@ -1,1 +1,1 @@
-web: gunicorn garage_scraper:app
+web: gunicorn lookup:app
