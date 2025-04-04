@@ -86,6 +86,18 @@ def get_vehicle_data(reg):
             ('transmission', vehicle_parts[3].strip())
         ])
         
+        # Extract registration date
+        reg_date_element = soup.find(string=lambda text: "Registered on:" in text if text else False)
+        if reg_date_element:
+            reg_date = reg_date_element.strip().replace("Registered on:", "").strip()
+            result['registered_on'] = reg_date
+        
+        # Extract MOT expiry date
+        mot_date_element = soup.find(string=lambda text: "MOT due on:" in text if text else False)
+        if mot_date_element:
+            mot_date = mot_date_element.strip().replace("MOT due on:", "").strip()
+            result['mot_expiry'] = mot_date
+        
         elapsed = time.time() - start_time
         logger.info(f"Retrieved data for {reg} in {elapsed:.2f} seconds")
         return result
