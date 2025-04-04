@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor
 from functools import wraps
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -125,6 +126,20 @@ def batch_lookup():
     response = {reg.upper(): result for reg, result in zip(registrations, results)}
     return jsonify(response)
 
+@app.route('/')
+def home():
+    """Home page with basic instructions"""
+    return jsonify({
+        "name": "Sussex Vehicle Data API",
+        "endpoints": {
+            "Single lookup": "GET /<registration>",
+            "Batch lookup": "POST /batch with JSON body {\"registrations\": [\"REG1\", \"REG2\", ...]}"
+        },
+        "example": "Try /WO15CZY"
+    })
+
 if __name__ == "__main__":
-    logger.info("Starting vehicle lookup service...")
-    app.run(debug=True, host='0.0.0.0', port=5001, threaded=True)
+    # Get port from environment variable for hosting platforms
+    port = int(os.environ.get("PORT", 5001))
+    logger.info(f"Starting vehicle lookup service on port {port}...")
+    app.run(debug=False, host='0.0.0.0', port=port, threaded=True)
