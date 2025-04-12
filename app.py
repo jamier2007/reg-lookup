@@ -152,12 +152,12 @@ def batch_lookup():
 def home():
     """Home page with basic instructions"""
     return jsonify({
-        "name": "Sussex Vehicle Data API",
+        "name": "Vehicle Data API",
         "endpoints": {
             "Single lookup": "GET /<registration>",
             "Batch lookup": "POST /batch with JSON body {\"registrations\": [\"REG1\", \"REG2\", ...]}"
         },
-        "example": "Try /WO15CZY"
+        "example": "Try /AB12 CDE"
     })
 
 if __name__ == "__main__":
