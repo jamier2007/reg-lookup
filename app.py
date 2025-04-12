@@ -7,6 +7,7 @@ from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor
 from functools import wraps
 import os
+from flask_cors import CORS
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -14,6 +15,15 @@ logger = logging.getLogger(__name__)
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# Configure CORS
+cors_origins = [
+    'http://berkshirecarbuyer.co.uk',
+    'https://berkshirecarbuyer.co.uk',
+    'http://api.berkshirecarbuyer.co.uk',
+    'https://api.berkshirecarbuyer.co.uk'
+]
+CORS(app, resources={r"/*": {"origins": cors_origins}})
 
 # Retry decorator for handling temporary failures
 def retry(max_retries=3, delay=1):
