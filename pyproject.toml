@@ -1,5 +1,5 @@
 [project]
-name = "-vehicle-scraper"
+name = "vehicle-scraper"
 version = "0.1.0"
 description = "A fast vehicle data scraper for retrieving information using registration numbers"
 requires-python = ">=3.11"
