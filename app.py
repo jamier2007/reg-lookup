@@ -157,7 +157,7 @@ def home():
             "Single lookup": "GET /<registration>",
             "Batch lookup": "POST /batch with JSON body {\"registrations\": [\"REG1\", \"REG2\", ...]}"
         },
-        "example": "Try /AB12 CDE"
+        "example": "Try /AB12CDE"
     })
 
 if __name__ == "__main__":
