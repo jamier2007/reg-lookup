@@ -37,11 +37,15 @@ def retry(max_retries=3, delay=1):
                 except Exception as e:
                     retries += 1
                     if retries >= max_retries:
-                        logger.error(f"Failed after {max_retries} retries: {str(e)}")
-                        raise
-                    logger.warning(f"Retry {retries}/{max_retries} after error: {str(e)}")
+                        logger.error(
+                            f"Failed after {max_retries} retries: {str(e)}"
+                        )
+                        return {"error": str(e)}
+                    logger.warning(
+                        f"Retry {retries}/{max_retries} after error: {str(e)}"
+                    )
                     time.sleep(delay)
-            return None
+            return {"error": "Unknown failure"}
         return decorated_function
     return decorator
 
@@ -64,8 +68,10 @@ def get_vehicle_data(reg):
         response = requests.get(url, headers=headers, timeout=10)
         
         if response.status_code != 200:
-            logger.error(f"Error fetching data for {reg}: HTTP {response.status_code}")
-            return {"error": f"HTTP Error: {response.status_code}"}
+            logger.error(
+                f"Error fetching data for {reg}: HTTP {response.status_code}"
+            )
+            raise ValueError(f"HTTP Error: {response.status_code}")
             
         html = response.text
         
@@ -112,12 +118,12 @@ def get_vehicle_data(reg):
         logger.info(f"Retrieved data for {reg} in {elapsed:.2f} seconds")
         return result
         
-    except requests.exceptions.Timeout:
+    except requests.exceptions.Timeout as e:
         logger.error(f"Timeout fetching data for {reg}")
-        return {"error": "Request timed out"}
+        raise e
     except Exception as e:
         logger.error(f"Error processing {reg}: {str(e)}")
-        return {"error": f"Processing error: {str(e)}"}
+        raise e
 
 @app.route('/<reg>')
 def vehicle_lookup(reg):
